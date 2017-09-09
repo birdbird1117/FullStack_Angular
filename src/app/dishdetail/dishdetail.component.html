@@ -38,7 +38,8 @@
     <md-spinner></md-spinner><h4>Loading . . . Please Wait</h4>
   </div>
 
-  <div fxFlex="40" *ngIf="dish">
+  <div fxFlex="40" >
+  <div  *ngIf="dish">
     <h3>Comments</h3>
     <md-list>
      <md-list-item  *ngFor="let comment of dish.comments">
@@ -47,7 +48,12 @@
        <p md-line> -- {{comment.author}} {{comment.date | date}}  </p>
      </md-list-item>
     </md-list>
-            <div fxFlex="40">
+  </div>
+  <div [hidden]="dish">
+    <md-spinner></md-spinner><h4>Loading . . . Please Wait</h4>
+  </div>
+
+  <div>
         <form novalidate [formGroup]="newcommentForm" (ngSubmit)="onSubmit()">
         <p>
         <md-input-container>
@@ -66,13 +72,7 @@
         </button>
         </form>
       </div>
-
   </div>
-  <div [hidden]="dish">
-    <md-spinner></md-spinner><h4>Loading . . . Please Wait</h4>
-  </div>
-
-
 
 
 
