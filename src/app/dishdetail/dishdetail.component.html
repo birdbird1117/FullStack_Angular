@@ -54,21 +54,34 @@
   </div>
 
   <div>
+    <p>{{ newcommentForm.value | json }} {{ newcommentForm.status | json }}</p>
         <form novalidate [formGroup]="newcommentForm" (ngSubmit)="onSubmit()">
         <p>
-        <md-input-container>
-          <input mdInput formControlName="author" placeholder="Name" type="text">
+        <md-input-container class="half-width"
+             dividerColor="{{(formErrors.author) ? 'warn' : 'primary'}}">
+          <input mdInput formControlName="author" placeholder="Name" type="text" required>
+          <md-hint>
+            <span [hidden]="!(formErrors.author)">
+                  {{formErrors.author}}</span>
+          </md-hint>
         </md-input-container>
         </p>
         <p>
-          <md-slider min="1" max="5" thumbLabel tickInterval="1" value="5"></md-slider>
+          <md-slider min="1" max="5" thumbLabel tickInterval="1" value="5">
+            <input mdInput formControlName="rating">
+          </md-slider>
         </p>
         <p>
-        <md-input-container>
-          <textarea mdInput formControlName="comment" placeholder="Your Comment" rows=12></textarea>
+        <md-input-container class="half-width"
+             dividerColor="{{(formErrors.comment) ? 'warn' : 'primary'}}">
+          <textarea mdInput formControlName="comment" placeholder="Your Comment" rows=12 required></textarea>
+          <md-hint>
+            <span [hidden]="!(formErrors.comment)">
+                  {{formErrors.comment}}</span>
+          </md-hint>
         </md-input-container>
         </p>
-        <button type="submit" md-button class="background-primary text-floral-white">Submit
+        <button type="submit" md-button class="background-primary text-floral-white" [disabled]="newcommentForm.invalid">Submit
         </button>
         </form>
       </div>

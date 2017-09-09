@@ -27,6 +27,24 @@ export class DishdetailComponent implements OnInit {
   newcomment: Comment;
 
 
+  formErrors = {
+    'author': '',
+    'comment': '',
+  };
+
+  validationMessages = {
+    'author': {
+      'required':      'Name is required.',
+      'minlength':     'Name must be at least 2 characters long.',
+      'maxlength':     'Name cannot be more than 25 characters long.'
+    },
+    'comment': {
+      'required':      'Comment is required.',
+      'minlength':     'Comment must be at least 2 characters long.',
+      'maxlength':     'Comment cannot be more than 2500 characters long.'
+    },
+  };
+
    constructor(private dishservice: DishService,
      private route: ActivatedRoute,
      private location: Location,
@@ -52,17 +70,33 @@ export class DishdetailComponent implements OnInit {
       this.location.back();
   }
 
+  onValueChanged(data?: any) {
+    if (!this.newcommentForm) { return; }
+    const form = this.newcommentForm;
+    for (const field in this.formErrors) {
+      // clear previous error message (if any)
+      this.formErrors[field] = '';
+      const control = form.get(field);
+      if (control && control.dirty && !control.valid) {
+        const messages = this.validationMessages[field];
+        for (const key in control.errors) {
+          this.formErrors[field] += messages[key] + ' ';
+        }
+      }
+    }
+  }
+
   createForm() {
     this.newcommentForm = this.newct.group({
       rating: '',
-      comment: '',
-      author: '',
+      comment: ['', [Validators.required, Validators.minLength(2), Validators.maxLength(2500)] ],
+      author: ['', [Validators.required, Validators.minLength(2), Validators.maxLength(25)] ],
       date: '',
     });
 
-    //this.feedbackForm.valueChanges.subscribe(data => this.onValueChanged(data));
+    this.newcommentForm.valueChanges.subscribe(data => this.onValueChanged(data));
   
-    //this.onValueChanged();
+    this.onValueChanged();
 
   }
 
