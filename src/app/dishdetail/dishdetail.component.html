@@ -47,9 +47,34 @@
        <p md-line> -- {{comment.author}} {{comment.date | date}}  </p>
      </md-list-item>
     </md-list>
+            <div fxFlex="40">
+        <form novalidate [formGroup]="newcommentForm" (ngSubmit)="onSubmit()">
+        <p>
+        <md-input-container>
+          <input mdInput formControlName="author" placeholder="Name" type="text">
+        </md-input-container>
+        </p>
+        <p>
+          <md-slider min="1" max="5" thumbLabel tickInterval="1" value="5"></md-slider>
+        </p>
+        <p>
+        <md-input-container>
+          <textarea mdInput formControlName="comment" placeholder="Your Comment" rows=12></textarea>
+        </md-input-container>
+        </p>
+        <button type="submit" md-button class="background-primary text-floral-white">Submit
+        </button>
+        </form>
+      </div>
+
   </div>
   <div [hidden]="dish">
     <md-spinner></md-spinner><h4>Loading . . . Please Wait</h4>
   </div>
+
+
+
+
+
 
 </div>

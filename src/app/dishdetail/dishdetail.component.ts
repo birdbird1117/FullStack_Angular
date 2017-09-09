@@ -7,6 +7,8 @@ import { DishService } from '../services/dish.service';
 
 import 'rxjs/add/operator/switchMap';
  
+import { FormBuilder, FormGroup, Validators } from '@angular/forms';
+import { Comment } from '../shared/comment';
 
 
 @Component({
@@ -14,14 +16,24 @@ import 'rxjs/add/operator/switchMap';
   templateUrl: './dishdetail.component.html',
   styleUrls: ['./dishdetail.component.scss']
 })
+
 export class DishdetailComponent implements OnInit {
    dish : Dish;
    dishIds: number[];
    prev: number;
    next: number;
+
+  newcommentForm: FormGroup;
+  newcomment: Comment;
+
+
    constructor(private dishservice: DishService,
      private route: ActivatedRoute,
-     private location: Location) { }
+     private location: Location,
+     private newct: FormBuilder) { 
+     this.createForm();
+
+   }
 
    ngOnInit() {
      this.dishservice.getDishIds()
@@ -36,8 +48,33 @@ export class DishdetailComponent implements OnInit {
     this.next = this.dishIds[(this.dishIds.length + index + 1)%this.dishIds.length];
   }
 
-   goBack(): void {
+  goBack(): void {
       this.location.back();
+  }
+
+  createForm() {
+    this.newcommentForm = this.newct.group({
+      rating: '',
+      comment: '',
+      author: '',
+      date: '',
+    });
+
+    //this.feedbackForm.valueChanges.subscribe(data => this.onValueChanged(data));
+  
+    //this.onValueChanged();
+
+  }
+
+  onSubmit() {
+    this.newcomment = this.newcommentForm.value;
+    console.log(this.newcomment);
+    this.newcommentForm.reset({
+      rating: '',
+      comment: '',
+      author: '',
+      date: '',
+    });
   }
 
 }
