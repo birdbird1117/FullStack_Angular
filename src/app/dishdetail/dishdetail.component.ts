@@ -91,7 +91,6 @@ export class DishdetailComponent implements OnInit {
       rating: 5,
       comment: ['', [Validators.required, Validators.minLength(2), Validators.maxLength(2500)] ],
       author: ['', [Validators.required, Validators.minLength(2), Validators.maxLength(25)] ],
-      date: '',
     });
 
     this.newcommentForm.valueChanges.subscribe(data => this.onValueChanged(data));
@@ -110,7 +109,6 @@ export class DishdetailComponent implements OnInit {
       rating: 5,
       comment: '',
       author: '',
-      date: '',
     });
   }
 
