@@ -88,7 +88,7 @@ export class DishdetailComponent implements OnInit {
 
   createForm() {
     this.newcommentForm = this.newct.group({
-      rating: '',
+      rating: 5,
       comment: ['', [Validators.required, Validators.minLength(2), Validators.maxLength(2500)] ],
       author: ['', [Validators.required, Validators.minLength(2), Validators.maxLength(25)] ],
       date: '',
@@ -102,9 +102,12 @@ export class DishdetailComponent implements OnInit {
 
   onSubmit() {
     this.newcomment = this.newcommentForm.value;
+    this.newcomment.date = new Date().toISOString();
     console.log(this.newcomment);
+    this.dish.comments.push(this.newcomment);
+
     this.newcommentForm.reset({
-      rating: '',
+      rating: 5,
       comment: '',
       author: '',
       date: '',

@@ -47,15 +47,30 @@
        <p md-line> {{comment.rating}} Stars </p>
        <p md-line> -- {{comment.author}} {{comment.date | date}}  </p>
      </md-list-item>
+<!--      <md-list-item [formGroup]="newcommeentForm" [hidden]="newcommentForm.invalid" >
+       <p md-line> {{newcommentForm.comment}} </p>
+       <p md-line> {{newcommentForm.rating}} Stars </p>
+       <p md-line>  {{newcommentForm.author}}  </p>
+     </md-list-item>   -->   
     </md-list>
   </div>
+  <div *ngIf="newcommentForm.valid">
+    <md-list  >
+     <md-list-item >
+       <p md-line> {{newcommentForm.value.comment}} </p>
+       <p md-line> {{newcommentForm.value.rating}} Stars </p>
+       <p md-line> -- {{newcommentForm.value.author}}  </p>
+     </md-list-item>     
+    </md-list>
+  </div>
+
   <div [hidden]="dish">
     <md-spinner></md-spinner><h4>Loading . . . Please Wait</h4>
   </div>
 
   <div>
-    <p>{{ newcommentForm.value | json }} {{ newcommentForm.status | json }}</p>
-        <form novalidate [formGroup]="newcommentForm" (ngSubmit)="onSubmit()">
+<!--     <p>{{ newcommentForm.value | json }} {{ newcommentForm.status | json }}</p>
+ -->        <form novalidate [formGroup]="newcommentForm" (ngSubmit)="onSubmit()">
         <p>
         <md-input-container class="half-width"
              dividerColor="{{(formErrors.author) ? 'warn' : 'primary'}}">
@@ -67,8 +82,7 @@
         </md-input-container>
         </p>
         <p>
-          <md-slider min="1" max="5" thumbLabel tickInterval="1" value="5">
-            <input mdInput formControlName="rating">
+          <md-slider formControlName="rating" min="1" max="5" thumbLabel tickInterval="1" value="5">
           </md-slider>
         </p>
         <p>
@@ -86,8 +100,4 @@
         </form>
       </div>
   </div>
-
-
-
-
 </div>
