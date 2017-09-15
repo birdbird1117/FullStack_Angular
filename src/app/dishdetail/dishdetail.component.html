@@ -6,7 +6,7 @@
     fxLayoutGap="10px"
     fxLayoutGap.xs="0">
 
-  <div fxFlex="40" *ngIf="dish" [@visibility]="visibility">
+  <div fxFlex="40" *ngIf="dish" [@visibility]="visibility"  [@expand] >
       <md-card>
         <md-card-header>
           <md-card-title>
@@ -38,8 +38,8 @@
     <md-spinner></md-spinner><h4>Loading . . . Please Wait</h4>
   </div>
 
-  <div fxFlex="40" [@visibility]="visibility">
-  <div  *ngIf="dish">
+  <div fxFlex="40" [@visibility]="visibility"  [@expand] >
+  <div  *ngIf="dish" >
     <h3>Comments</h3>
     <md-list>
      <md-list-item  *ngFor="let comment of dish.comments">
