@@ -2,18 +2,27 @@ import { Component, OnInit } from '@angular/core';
 import { FormBuilder, FormGroup, Validators } from '@angular/forms';
 import { Feedback, ContactType } from '../shared/feedback';
 import { FeedbackService } from '../services/feedback.service';
+import { expand } from '../animations/app.animation';
 
 
 @Component({
   selector: 'app-contact',
   templateUrl: './contact.component.html',
-  styleUrls: ['./contact.component.scss']
-})
+  styleUrls: ['./contact.component.scss'],
+  animations: [
+  expand()
+  ]})
 export class ContactComponent implements OnInit {
 
 	feedbackForm: FormGroup;
 	feedback: Feedback;
   contactType = ContactType;
+  feedbackcopy=null;
+  feedbackcopy2=null;
+  condition0 : boolean = false;
+  condition1: boolean = true;
+  condition2 : boolean = false;
+
 
   formErrors = {
     'firstname': '',
@@ -86,10 +95,14 @@ export class ContactComponent implements OnInit {
   }
 
   onSubmit() {
+    //this.feedback = null;
     this.feedback = this.feedbackForm.value;
+    this.feedbackcopy2 = this.feedbackForm.value;
     console.log(this.feedback);
-    this.feedbackservice.submitFeedback(this.feedback);
- //   .subscribe(feedback => feedback=this.feedback);
+    
+    this.feedbackservice.submitFeedback(this.feedback)
+    .subscribe(feedbackcopy => {this.feedbackcopy = feedbackcopy; this.feedback=null});
+    setTimeout(()=>{this.feedbackcopy=null},5000);
     this.feedbackForm.reset({
       firstname: '',
       lastname: '',
@@ -99,6 +112,7 @@ export class ContactComponent implements OnInit {
       contacttype: 'None',
       message: ''
     });
+    this.feedbackcopy = null;
   }
 
 
